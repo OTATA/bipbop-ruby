@@ -19,6 +19,12 @@ module Bipbop
         }        
       end
       
+      def generate_push(parameters, label, push_callback, push_class = "Bipbop::Client::Push")
+        query = "SELECT FROM '%s'.'%s'" % [ @database.name(), self.name() ]
+        instance = Kernel.const_get(push_class).new(@ws)
+        instance.create(label, push_callback, query, parameters)
+      end
+      
       def name
         @dom_node['name']
       end
